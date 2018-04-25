@@ -12,6 +12,14 @@ public abstract class Evento implements Comparable<Evento> {
         1: Fin de Servicio
         2: Fin de Simulacion
     */
+
+    private byte cuadroClinico;
+    /*
+    Codificación:
+        0:Leve
+        1:Medio
+        2:Grave
+     */
     private float tiempo;
     // Considerese el 'clock'
     private Paciente paciente;
