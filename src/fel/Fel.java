@@ -43,7 +43,7 @@ public class Fel {
         // Herramienta de Debug para ver la lista.
         System.out.println("--- MOSTRANDO ESTADO LISTA ---\n");
         for (Evento e : this.lista) {
-            System.out.println("N°Paciente:" + e.getItem().getNumero() + "  Tiempo:" + e.getTiempo() + "  Tipo Evento:" + e.getTipo());
+            System.out.println("N°Paciente:" + e.getPaciente().getNumero() + "  Tiempo:" + e.getTiempo() + "  Tipo Evento:" + e.getTipo());
 
         }
         System.out.println("--- FIN ESTADO LISTA --- \n");

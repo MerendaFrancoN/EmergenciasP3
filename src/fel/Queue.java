@@ -1,25 +1,25 @@
 package fel;
 
-import eventos.Item;
+import eventos.Paciente;
 
 import java.util.LinkedList;
 
 public class Queue {
 
     private int cantidadItems;
-    private LinkedList<Item> cola;
+    private LinkedList<Paciente> cola;
 
     public Queue() {
         cola = new LinkedList<>();
         cantidadItems = 0;
     }
 
-    public void insertarCola(Item item) {
-        this.cola.addLast(item);
+    public void insertarCola(Paciente paciente) {
+        this.cola.addLast(paciente);
         this.cantidadItems++;
     }
 
-    public Item suprimirCola() {
+    public Paciente suprimirCola() {
         this.cantidadItems--;
         return this.cola.removeFirst();
     }

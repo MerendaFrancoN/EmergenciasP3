@@ -9,22 +9,22 @@ public class EventoArribo extends Evento {
 
     public EventoArribo(float tiempo) {
         // Considero que inicia en item n°1
-        super((byte) 0, tiempo, new Item(Item.getCantidadItems() + 1, tiempo));
+        super((byte) 0, tiempo, new Paciente(Paciente.getCantidadItems() + 1, tiempo));
         // Actualizo la cantidad de Items.
-        Item.setCantidadItems(Item.getCantidadItems() + 1);
+        Paciente.setCantidadItems(Paciente.getCantidadItems() + 1);
     }
 
     public void planificarEvento(Servidor servidor, Queue queue) {
         /* Planificar el nuevo evento de arribo */
 
         if (servidor.isOcupado()) {
-            queue.insertarCola(this.getItem());
+            queue.insertarCola(this.getPaciente());
         } else {
             // Si el servidor no estaba ocupado...
-            this.getItem().setTiempoDuracionServicio(GeneradorTiempos.getTiempoDuracionServicio());
+            this.getPaciente().setTiempoDuracionServicio(GeneradorTiempos.getTiempoDuracionServicio());
             // se setea a si mismo el tiempo de Duracion de Servicio...
             // y planifica nueva Salida.
-            EventoSalida eventoSalida = new EventoSalida(this.getTiempo() + this.getItem().getTiempoDuracionServicio(),this.getItem());
+            EventoSalida eventoSalida = new EventoSalida(this.getTiempo() + this.getPaciente().getTiempoDuracionServicio(),this.getPaciente());
             // Insertamos en la Fel el evento de salida
             Fel.getFel().insertarFel(eventoSalida);
 

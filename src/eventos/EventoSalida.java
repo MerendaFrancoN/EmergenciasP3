@@ -7,8 +7,8 @@ import hospital.Servidor;
 
 public class EventoSalida extends Evento {
 
-    public EventoSalida(float tiempo, Item item) {
-        super((byte) 1, tiempo, item);
+    public EventoSalida(float tiempo, Paciente paciente) {
+        super((byte) 1, tiempo, paciente);
     }
 
     public void planificarEvento(Servidor servidor, Queue queue) {
@@ -28,9 +28,9 @@ public class EventoSalida extends Evento {
         }
 
         // Colecto tiempo en espera
-        Item.setTiempoEsperaCola(this.getTiempo(), this.getItem().getTiempoDuracionServicio(), this.getItem().getTiempoArribo());
+        Paciente.setTiempoEsperaCola(this.getTiempo(), this.getPaciente().getTiempoDuracionServicio(), this.getPaciente().getTiempoArribo());
 
         // Colecto tiempo en tránsito
-        Item.setTiempoTransito(this.getTiempo(), this.getItem().getTiempoArribo());
+        Paciente.setTiempoTransito(this.getTiempo(), this.getPaciente().getTiempoArribo());
     }
 }

@@ -14,11 +14,11 @@ public abstract class Evento implements Comparable<Evento> {
     */
     private float tiempo;
     // Considerese el 'clock'
-    private Item item;
+    private Paciente paciente;
 
-    public Evento(byte tipo, float tiempo, Item item) {
+    public Evento(byte tipo, float tiempo, Paciente paciente) {
         this.tiempo = tiempo;
-        this.item = item;
+        this.paciente = paciente;
         this.tipo = tipo;
     }
 
@@ -30,8 +30,8 @@ public abstract class Evento implements Comparable<Evento> {
         return tiempo;
     }
 
-    public Item getItem() {
-        return item;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
     // Implementa la planificacion de eventos.

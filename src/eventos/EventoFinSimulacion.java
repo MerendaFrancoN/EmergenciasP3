@@ -6,7 +6,7 @@ import hospital.Servidor;
 public class EventoFinSimulacion extends Evento {
 
     public EventoFinSimulacion(float tiempo) {
-        super((byte) 2, tiempo, new Item(-1, -1));
+        super((byte) 2, tiempo, new Paciente(-1, -1));
     }
     /*
     El tiempo de arribo va con un valor inválido y se le pasa como parametro 'tiempo'

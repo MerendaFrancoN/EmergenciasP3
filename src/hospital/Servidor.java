@@ -1,16 +1,16 @@
 package hospital;
 
-import eventos.Item;
+import eventos.Paciente;
 
 public class Servidor {
-    private Item item;
+    private Paciente paciente;
     private boolean ocupado;
     private float tiempoOcioso;
     private float tiempoInicioOcio;
 
 
     public Servidor() {
-        item = null;
+        paciente = null;
         // No hay items en el servidor
         ocupado = false;
         // Desocupado
@@ -20,12 +20,12 @@ public class Servidor {
         // Inicio de Ocio en 0
     }
 
-    public Item getItem() {
-        return item;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
     public boolean isOcupado() {

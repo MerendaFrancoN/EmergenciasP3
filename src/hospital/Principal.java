@@ -3,7 +3,7 @@ package hospital;
 import eventos.Evento;
 import eventos.EventoArribo;
 import eventos.EventoFinSimulacion;
-import eventos.Item;
+import eventos.Paciente;
 import fel.Fel;
 import fel.Queue;
 
@@ -49,7 +49,7 @@ public class Principal {
         }
         // Muestra de resultados
 
-        Estadisticas.calcularEstadisticas(Item.getTiempoEsperaCola(), Item.getTiempoTransito(), servidor.getTiempoOcioso(), tiempoSimulacion, Item.getCantidadItems());
+        Estadisticas.calcularEstadisticas(Paciente.getTiempoEsperaCola(), Paciente.getTiempoTransito(), servidor.getTiempoOcioso(), tiempoSimulacion, Paciente.getCantidadItems());
 
         System.out.println("##############################################");
         System.out.println("#######  RESULTADOS DE LA SIMULACION  ########");
