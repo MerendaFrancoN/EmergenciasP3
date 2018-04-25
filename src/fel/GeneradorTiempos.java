@@ -82,15 +82,25 @@ public class GeneradorTiempos {
     }
 
 
-    public static int getTiempoDuracionServicio() {
+    public static int getTiempoDuracionServicio(byte tipo) {
         double numeroRandom = random.nextDouble();
-        if (numeroRandom <= 0.5)
-            return 3; //Para acumulada de 0.5 => 3 Minutos.
-        else {
-            if (numeroRandom <= 0.9)
-                return 4; //Para acumulada de 0.9 => 4 Minutos.
-            else
-                return 5; //Para acumulada de 1 => 5 Minutos
+        switch (tipo){
+            //Cuadro Clinico LEVE: Exponencial
+            case 0:{
+
+            }
+
+            //Cuadro Clinico Medio: Uniforme
+            case 1:{
+
+            }
+
+            //Cuadro Clinico GRAVE: Normal
+            case 2:{
+
+            }
         }
+
+        return 0;
     }
 }
