@@ -7,8 +7,6 @@ import eventos.Item;
 import fel.Fel;
 import fel.Queue;
 
-import java.util.ListIterator;
-
 public class Principal {
 
     public static void main(String[] args) {
