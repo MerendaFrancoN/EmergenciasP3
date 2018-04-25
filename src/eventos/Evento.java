@@ -34,6 +34,7 @@ public abstract class Evento implements Comparable<Evento> {
         return tipo;
     }
 
+
     public float getTiempo() {
         return tiempo;
     }
@@ -51,4 +52,11 @@ public abstract class Evento implements Comparable<Evento> {
         return Float.compare(this.getTiempo(), o.getTiempo());
     }
 
+    public byte getCuadroClinico() {
+        return cuadroClinico;
+    }
+
+    public void setCuadroClinico(byte cuadroClinico) {
+        this.cuadroClinico = cuadroClinico;
+    }
 }
