@@ -1,23 +1,20 @@
 package fel;
 
 import java.util.Random;
-
+import java.math.*;
 
 public class GeneradorTiempos {
 
-    private static Random random;
-
-    static {
-        random = new Random(System.currentTimeMillis());
-    }
 
     public static int getTiempoEntreArribos(float tiempoActual,byte tipo) {
         /*Considero el tiempo actual ya que si se encuentra entre las 7-9 o 20-22 la cantidad de arribos es mayor*/
 
-        double numeroRandom = random.nextDouble();
+        Random random = new Random();
+        double numeroRandom= random.nextDouble();
         switch (tipo)
         {
             /*Cuadro Clinico= Leve*/
+            //TODO: Pasar a minutos
             case 0:{
                 if( (tiempoActual>=7 && tiempoActual<=9) || (tiempoActual>=20 && tiempoActual<=22) ) {
                     if (numeroRandom <= 0.5)
@@ -81,18 +78,31 @@ public class GeneradorTiempos {
         return 0; //*Para que no tire error de que falta return*/
     }
 
+    public static double varAleaExp(double media){
 
-    public static int getTiempoDuracionServicio(byte tipo) {
-        double numeroRandom = random.nextDouble();
+
+        double lmbd= 1/media;
+        double x=(-1/lmbd)*(Math.log(1-new Random().nextDouble()));
+
+        return x;
+    }
+    public static double varAleaUniforme(double a, double b){
+
+        double x=a+(b-a)*new Random().nextDouble();
+        return x;
+    }
+
+    public static double getTiempoDuracionServicio(byte tipo) {
+
         switch (tipo){
             //Cuadro Clinico LEVE: Exponencial
             case 0:{
-
+                return varAleaExp(30.0); //Retorna minutos, 30 es la media de la consigna.
             }
 
             //Cuadro Clinico Medio: Uniforme
             case 1:{
-
+                return varAleaUniforme(10,20); //10 y 20 es el intervalo de la consigna.
             }
 
             //Cuadro Clinico GRAVE: Normal
