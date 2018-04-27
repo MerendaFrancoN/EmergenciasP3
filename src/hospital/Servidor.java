@@ -1,6 +1,7 @@
 package hospital;
 
 import eventos.Paciente;
+import fel.Queue;
 
 public class Servidor {
     private Paciente paciente;
@@ -8,6 +9,7 @@ public class Servidor {
     private float tiempoOcioso;
     private float tiempoInicioOcio;
 
+    private Queue cola; //Cola propia de cada servidor
 
     public Servidor() {
         paciente = null;
@@ -18,6 +20,8 @@ public class Servidor {
         // Tiempo ocioso inical es de 0.
         tiempoInicioOcio = 0;
         // Inicio de Ocio en 0
+
+        cola=new Queue(); //Inicialización de la cola, vacia.
     }
 
     public Paciente getPaciente() {

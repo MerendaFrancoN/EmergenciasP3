@@ -9,7 +9,7 @@ public class EventoArribo extends Evento {
 
     public EventoArribo(float tiempo) {
         // Considero que inicia en item n°1
-        super((byte) 0, tiempo, new Paciente(Paciente.getCantidadItems() + 1, tiempo));
+        super((byte) 0, tiempo, new Paciente(Paciente.getCantidadItems() + 1));
         // Actualizo la cantidad de Items.
         Paciente.setCantidadItems(Paciente.getCantidadItems() + 1);
     }

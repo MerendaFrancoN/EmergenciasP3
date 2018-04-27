@@ -11,6 +11,7 @@ public class Principal {
 
     public static void main(String[] args) {
 
+
         boolean finSimulacion = false;
         Evento actual;
         float tiempoSimulacion;
@@ -18,7 +19,8 @@ public class Principal {
         // Creo la Fel, Queue y Servidor
         Fel fel = Fel.getFel();
         Queue queue = new Queue();
-        Servidor servidor = new Servidor();
+        Servidores servidores = new Servidores();
+        servidores.inicializarServidores(2,1,2);
 
         // Inicializamos el tiempo de la simulacion.
         tiempoSimulacion = 0;
@@ -60,6 +62,7 @@ public class Principal {
         System.out.printf("    * %%%.2f\n", (Estadisticas.porcentajeTiempoOcioso * 100));
         System.out.println("\n**Tiempo medio de tiempo de tránsito:    ");
         System.out.printf("    * %.2f min.\n", Estadisticas.tiempoMedioTransito);
+
 
     }
 

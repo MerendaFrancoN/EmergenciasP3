@@ -13,13 +13,7 @@ public abstract class Evento implements Comparable<Evento> {
         2: Fin de Simulacion
     */
 
-    private byte cuadroClinico;
-    /*
-    Codificación:
-        0:Leve
-        1:Medio
-        2:Grave
-     */
+
     private float tiempo;
     // Considerese el 'clock'
     private Paciente paciente;
@@ -52,11 +46,5 @@ public abstract class Evento implements Comparable<Evento> {
         return Float.compare(this.getTiempo(), o.getTiempo());
     }
 
-    public byte getCuadroClinico() {
-        return cuadroClinico;
-    }
 
-    public void setCuadroClinico(byte cuadroClinico) {
-        this.cuadroClinico = cuadroClinico;
-    }
 }

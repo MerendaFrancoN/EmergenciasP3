@@ -9,10 +9,20 @@ public class Paciente {
     private float tiempoArribo;
     private float tiempoDuracionServicio;
 
-    public Paciente(int numero, float tiempoArribo) {
+    private byte cuadroClinico;
+    /*
+    Codificación:
+        0:Leve
+        1:Medio
+        2:Grave
+     */
+
+    public Paciente(int numero, float tiempoArribo, byte cuadroClinico ){
         this.numero = numero;
         this.tiempoArribo = tiempoArribo;
         this.tiempoDuracionServicio = 0;
+        this.cuadroClinico=cuadroClinico;
+
     }
 
     public static int getCantidadItems() {
@@ -60,5 +70,12 @@ public class Paciente {
 
     public void setTiempoDuracionServicio(float tiempoDuracionServicio) {
         this.tiempoDuracionServicio = tiempoDuracionServicio;
+    }
+    public byte getCuadroClinico() {
+        return cuadroClinico;
+    }
+
+    public void setCuadroClinico(byte cuadroClinico) {
+        this.cuadroClinico = cuadroClinico;
     }
 }
