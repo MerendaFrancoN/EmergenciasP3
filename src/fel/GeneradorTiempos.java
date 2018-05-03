@@ -118,7 +118,7 @@ public class GeneradorTiempos {
 
             //Cuadro Clinico GRAVE: Normal
             case 2: {
-
+                return varNormal(30,120); //Por consigna Media = 120, Desv.Estd=30
             }
         }
 
