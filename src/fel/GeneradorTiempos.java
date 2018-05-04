@@ -15,7 +15,7 @@ public class GeneradorTiempos {
             /*Cuadro Clinico= Leve*/
             //TODO: Pasar a minutos
             case 0: {
-                if ((tiempoActual >= 7 && tiempoActual <= 9) || (tiempoActual >= 20 && tiempoActual <= 22)) {
+                if ((tiempoActual >= 420 && tiempoActual <= 540) || (tiempoActual >= 1200 && tiempoActual <= 1320)) { //Desde las 7 a 9 o desde las 20 a las 22
                     if (numeroRandom <= 0.5)
                         return 10; //Para acumulada de 0.5 => 10 Minutos.
                     else {
@@ -39,7 +39,7 @@ public class GeneradorTiempos {
 
             /*Cuadro Clinico= Medio*/
             case 1: {
-                if ((tiempoActual >= 7 && tiempoActual <= 9) || (tiempoActual >= 20 && tiempoActual <= 22)) {
+                if ((tiempoActual >= 420 && tiempoActual <= 540) || (tiempoActual >= 1200 && tiempoActual <= 1320)) {
                     if (numeroRandom <= 0.35)
                         return 40; //Para acumulada de 0.35 => 40 Minutos.
                     else
@@ -55,7 +55,7 @@ public class GeneradorTiempos {
             /*Cuadro Clinico= Grave*/
             case 2: {
                 {
-                    if ((tiempoActual >= 7 && tiempoActual <= 9) || (tiempoActual >= 20 && tiempoActual <= 22)) {
+                    if ((tiempoActual >= 420 && tiempoActual <= 540) || (tiempoActual >= 1200 && tiempoActual <= 1320)) {
                         if (numeroRandom <= 0.4)
                             return 60; //Para acumulada de 0.4 => 60 Minutos.
                         else
