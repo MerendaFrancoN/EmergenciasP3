@@ -2,6 +2,7 @@ package eventos;
 
 import fel.Queue;
 import hospital.Servidor;
+import hospital.Servidores;
 
 public abstract class Evento implements Comparable<Evento> {
 
@@ -13,15 +14,16 @@ public abstract class Evento implements Comparable<Evento> {
         2: Fin de Simulacion
     */
 
-
+    private byte cuadroClinico; //Variable para poder determinar que tipo de evento y gravedad es.
     private float tiempo;
     // Considerese el 'clock'
     private Paciente paciente;
 
-    public Evento(byte tipo, float tiempo, Paciente paciente) {
+    public Evento(byte tipo, float tiempo, Paciente paciente,byte cuadroClinico) {
         this.tiempo = tiempo;
         this.paciente = paciente;
         this.tipo = tipo;
+        this.setCuadroClinico(cuadroClinico);
     }
 
     public byte getTipo() {
@@ -38,7 +40,7 @@ public abstract class Evento implements Comparable<Evento> {
     }
 
     // Implementa la planificacion de eventos.
-    public abstract void planificarEvento(Servidor servidor, Queue queue);
+    public abstract void planificarEvento(Servidores servidor, Queue queue,byte cuadro);
 
     @Override
     public int compareTo(Evento o) {
@@ -47,4 +49,11 @@ public abstract class Evento implements Comparable<Evento> {
     }
 
 
+    public byte getCuadroClinico() {
+        return cuadroClinico;
+    }
+
+    public void setCuadroClinico(byte cuadroClinico) {
+        this.cuadroClinico = cuadroClinico;
+    }
 }
