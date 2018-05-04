@@ -20,44 +20,16 @@ public class EventoSalida extends Evento {
 
         servidorUtil=servidores.retirarCola(cuadro);
 
-        if(servidorUtil!= null){//Hay cola
+        if( servidorUtil.getCola().getCantidadItems()!=0 ){//Hay cola
             Fel.getFel().insertarFel(new EventoSalida(this.getTiempo() + (float)GeneradorTiempos.getTiempoDuracionServicio(cuadro),servidorUtil.getCola().suprimirCola(),cuadro));
         }
         else{ //No hay Cola
 
             //Marco servidor como no ocupado
-            //servidorUtil.setOcupado(false);
-
-            switch (this.getCuadroClinico()){
-                case 0:
-                    for(int i=0;i<servidores.getMedicoResidente().size();i++){
-                        if(servidores.getMedicoResidente().get(i).getCola().getCantidadItems()==0){
-
-                            servidores.getMedicoResidente().get(i).setOcupado(false);
-                            servidores.getMedicoResidente().get(i).setTiempoInicioOcio(this.getTiempo());
-                            }
-                    }
-
-                case 1:
-                    for(int i=0;i<servidores.getMedicoGeneral().size();i++){
-                        if(servidores.getMedicoGeneral().get(i).getCola().getCantidadItems()==0){
-
-                        servidores.getMedicoGeneral().get(i).setOcupado(false);
-                        servidores.getMedicoGeneral().get(i).setTiempoInicioOcio(this.getTiempo());
-                        }
-                    }
-                case 2:
-                    for(int i=0;i<servidores.getMedicoEspecialista().size();i++){
-                        if(servidores.getMedicoEspecialista().get(i).getCola().getCantidadItems()==0){
-
-                            servidores.getMedicoEspecialista().get(i).setOcupado(false);
-                            servidores.getMedicoEspecialista().get(i).setTiempoInicioOcio(this.getTiempo());
-                         }
-                    }
-                    
-            }
+            servidorUtil.setOcupado(false);
 
             //Empezar a contar tiempo de ocio
+            servidorUtil.setTiempoInicioOcio(this.getTiempo());
         }
 
         // Colecto tiempo en espera

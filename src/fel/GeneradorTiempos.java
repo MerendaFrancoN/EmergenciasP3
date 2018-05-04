@@ -12,7 +12,10 @@ public class GeneradorTiempos {
         Random random = new Random();
         double numeroRandom = random.nextDouble();
 
-        float tiempoActual=tiempoTotal%1440; // 1 Dia=1440 minutos
+        float tiempoActual=tiempoTotal % 1440; // 1 Dia=1440 minutos
+
+
+        System.out.println("Tiempo total :"+tiempoTotal+ " Tiempo Actual="+tiempoActual+"\n");
 
         switch (tipo) {
             /*Cuadro Clinico= Leve*/

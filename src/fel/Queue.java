@@ -14,7 +14,10 @@ public class Queue {
         setCantidadItems(0);
     }
     public Paciente primerItem(){
-        return this.cola.get(0);
+        if(this.cola.size()==0)
+            return null;
+        else
+            return this.cola.get(0);
     }
 
     public void insertarCola(Paciente paciente) {

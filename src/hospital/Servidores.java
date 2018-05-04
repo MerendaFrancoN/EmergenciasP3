@@ -93,7 +93,7 @@ public class Servidores {
     Devuelve el servidor que contiene cola a retirar item más próximo a ser evaluado por servidor.
     Luego el servidor puede ser útil a la hora de calcular estadísticas.
      */
-    public Servidor retirarCola(byte cuadroClinico){ //Retirar paciente con tiempo más pequeño
+    public Servidor retirarCola(byte cuadroClinico){ //Devolver o el servidor que no tiene cola o el que tenga el item de menor tiempo
 
         /*Como las colas se que estan ordenadas, solo examino el primer item de cada una de ellas y ver
           quien tiene el paciente con menor tiempo*/
@@ -109,9 +109,12 @@ public class Servidores {
             case 0:{
 
                 cantidadServidores= this.medicoResidente.size();
-                while(this.medicoResidente.get(i).getCola().primerItem()!=null && !hayCola){ //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
-                                                                                                    //algun servidor que tenga cola y asignarle el primer item para compararlos con las otras
-                                                                                                    //colas posibles de los otros servidores.
+                while(this.medicoResidente.get(i).getCola().primerItem() != null && !hayCola){
+
+                    //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
+                    //algun servidor que tenga cola y asignarle el primer item para compararlos con las otras
+                    //colas posibles de los otros servidores.
+
                     hayCola=true;
                     tiempoPaciente=this.medicoResidente.get(i).getCola().primerItem().getTiempoArribo();
                     i++;
@@ -124,10 +127,7 @@ public class Servidores {
                         indiceServidor=i;
                     }
                 }
-                if(!hayCola) //Si no habia cola entonces devuelvo null, caso contrario el servidor que contiene el item con menor tiempo.
-                    return null;
-                else
-                    return this.medicoResidente.get(indiceServidor);
+                return this.medicoResidente.get(indiceServidor); //Devuelvo o bien el primero de los servidores ya que ninguno tiene cola, o el que tiene cola con el item de menor tiempo.
             }
 
             case 1:{
@@ -145,15 +145,12 @@ public class Servidores {
 
                 for(i=0;i<cantidadServidores;i++){
 
-                    if(this.medicoResidente.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo()) {
+                    if(this.medicoGeneral.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo()) {
                         tiempoPaciente = this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo();
                         indiceServidor=i;
                     }
                 }
-                if(!hayCola) //Si no habia cola entonces devuelvo null, caso contrario el servidor que contiene el item con menor tiempo.
-                    return null;
-                else
-                    return this.medicoGeneral.get(indiceServidor);
+                return this.medicoGeneral.get(indiceServidor); //Devuelvo o bien el primero de los servidores ya que ninguno tiene cola, o el que tiene cola con el item de menor tiempo.
             }
 
             case 2:{
@@ -169,15 +166,12 @@ public class Servidores {
 
                 for(i=0;i<cantidadServidores;i++){
 
-                    if(this.medicoResidente.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo()) {
+                    if(this.medicoEspecialista.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo()) {
                         tiempoPaciente = this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo();
                         indiceServidor=i;
                     }
                 }
-                if(!hayCola) //Si no habia cola entonces devuelvo null, caso contrario el servidor que contiene el item con menor tiempo.
-                    return null;
-                else
-                    return this.medicoEspecialista.get(indiceServidor);
+                return this.medicoEspecialista.get(indiceServidor); //Devuelvo o bien el primero de los servidores ya que ninguno tiene cola, o el que tiene cola con el item de menor tiempo.
             }
         }
         return null;
