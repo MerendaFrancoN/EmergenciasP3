@@ -6,14 +6,17 @@ import java.math.*;
 public class GeneradorTiempos {
 
 
-    public static int getTiempoEntreArribos(float tiempoActual, byte tipo) {
+    public static int getTiempoEntreArribos(float tiempoTotal, byte tipo) {
         /*Considero el tiempo actual ya que si se encuentra entre las 7-9 o 20-22 la cantidad de arribos es mayor*/
 
         Random random = new Random();
         double numeroRandom = random.nextDouble();
+
+        float tiempoActual=tiempoTotal%1440; // 1 Dia=1440 minutos
+
         switch (tipo) {
             /*Cuadro Clinico= Leve*/
-            //TODO: Pasar a minutos
+
             case 0: {
                 if ((tiempoActual >= 420 && tiempoActual <= 540) || (tiempoActual >= 1200 && tiempoActual <= 1320)) { //Desde las 7 a 9 o desde las 20 a las 22
                     if (numeroRandom <= 0.5)
