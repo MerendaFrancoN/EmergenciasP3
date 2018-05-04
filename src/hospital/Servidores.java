@@ -30,151 +30,92 @@ public class Servidores {
     }
 
 
+    public Queue asignacionCola(byte cuadroClinico) { //cola mas corta o primera de todas si son de igual longitud
 
-    public Queue asignacionCola(byte cuadroClinico){ //cola mas corta o primera de todas si son de igual longitud
+        Queue colaAsignada; //Variable con la cola a donde asignar el paciente.
+        int cantidadServidores; //Variable que contiene la cantidad de servidores por tipo de médico.
+        int colaCorta; //Variable que lleva la cantidad de la cola más corta.
+        LinkedList<Servidor> listaUtil = null;
 
-           Queue colaAsignada; //Variable con la cola a donde asignar el paciente.
-           int cantidadServidores; //Variable que contiene la cantidad de servidores por tipo de médico.
-           int colaCorta; //Variable que lleva la cantidad de la cola más corta.
+        switch (cuadroClinico) {
+            case 0: {
+                listaUtil = this.medicoResidente;
+                break;
+            }
+            case 1: {
+                listaUtil = this.medicoGeneral;
+                break;
+            }
+            case 2: {
+                listaUtil = this.medicoEspecialista;
+                break;
+            }
+        }
+        cantidadServidores = listaUtil.size();
+        colaCorta = listaUtil.get(0).getCola().getCantidadItems();
+        colaAsignada = listaUtil.get(0).getCola();
 
-           switch (cuadroClinico){
-               //Cuadro Leve
-               case 0:{
-                   cantidadServidores= this.medicoResidente.size();
-                   colaCorta=this.medicoResidente.get(0).getCola().getCantidadItems();
-                   colaAsignada=this.medicoResidente.get(0).getCola();
+        //Ya revise en i=0, por lo tanto arranco desde i=1
+        for (int i = 1; i < cantidadServidores; i++)
+            if (colaCorta > listaUtil.get(i).getCola().getCantidadItems()) {
 
-                   //Ya revise en i=0, por lo tanto arranco desde i=1
-                   for(int i=1;i<cantidadServidores;i++)
-                       if (colaCorta > this.medicoResidente.get(i).getCola().getCantidadItems()) {
-
-                            colaCorta = this.medicoResidente.get(i).getCola().getCantidadItems();
-                            colaAsignada = this.medicoResidente.get(i).getCola();
-                       }
-                       return colaAsignada;
-               }
-
-               //Cuadro Medio
-               case 1:{
-                   cantidadServidores= this.medicoGeneral.size();
-                   colaCorta=this.medicoGeneral.get(0).getCola().getCantidadItems();
-                   colaAsignada=this.medicoGeneral.get(0).getCola();
-
-                   //Ya revise en i=0, por lo tanto arranco desde i=1
-                   for(int i=1;i<cantidadServidores;i++)
-                       if (colaCorta > this.medicoGeneral.get(i).getCola().getCantidadItems()) {
-
-                           colaCorta = this.medicoGeneral.get(i).getCola().getCantidadItems();
-                           colaAsignada = this.medicoGeneral.get(i).getCola();
-                       }
-                   return colaAsignada;
-               }
-
-               //Cuadro Grave
-               case 2:{
-                   cantidadServidores= this.medicoEspecialista.size();
-                   colaCorta=this.medicoEspecialista.get(0).getCola().getCantidadItems();
-                   colaAsignada=this.medicoEspecialista.get(0).getCola();
-
-                   //Ya revise en i=0, por lo tanto arranco desde i=1
-                   for(int i=1;i<cantidadServidores;i++)
-                       if (colaCorta > this.medicoEspecialista.get(i).getCola().getCantidadItems()) {
-
-                           colaCorta = this.medicoEspecialista.get(i).getCola().getCantidadItems();
-                           colaAsignada = this.medicoEspecialista.get(i).getCola();
-                       }
-                   return colaAsignada;
-               }
-           }
-        return null;
+                colaCorta = listaUtil.get(i).getCola().getCantidadItems();
+                colaAsignada = listaUtil.get(i).getCola();
+            }
+        return colaAsignada;
     }
 
     /*
     Devuelve el servidor que contiene cola a retirar item más próximo a ser evaluado por servidor.
     Luego el servidor puede ser útil a la hora de calcular estadísticas.
      */
-    public Servidor retirarCola(byte cuadroClinico){ //Devolver o el servidor que no tiene cola o el que tenga el item de menor tiempo
+    public Servidor retirarCola(byte cuadroClinico) { //Devolver o el servidor que no tiene cola o el que tenga el item de menor tiempo
 
         /*Como las colas se que estan ordenadas, solo examino el primer item de cada una de ellas y ver
           quien tiene el paciente con menor tiempo*/
 
-        float tiempoPaciente=0;
-        int indiceServidor=0;
+        float tiempoPaciente = 0;
+        int indiceServidor = 0;
         int cantidadServidores;
-        int i=0; //Variable para moverse entre los indices de las colas
-        boolean hayCola=false;
+        int i = 0; //Variable para moverse entre los indices de las colas
+        boolean hayCola = false;
+        LinkedList<Servidor> listaUtil = null;
 
-        switch (cuadroClinico){
-
-            case 0:{
-
-                cantidadServidores= this.medicoResidente.size();
-                while(this.medicoResidente.get(i).getCola().primerItem() != null && !hayCola){
-
-                    //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
-                    //algun servidor que tenga cola y asignarle el primer item para compararlos con las otras
-                    //colas posibles de los otros servidores.
-
-                    hayCola=true;
-                    tiempoPaciente=this.medicoResidente.get(i).getCola().primerItem().getTiempoArribo();
-                    i++;
-                }
-
-                for(i=0;i<cantidadServidores;i++){
-
-                    if(this.medicoResidente.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoResidente.get(i).getCola().primerItem().getTiempoArribo()) {
-                        tiempoPaciente = this.medicoResidente.get(i).getCola().primerItem().getTiempoArribo();
-                        indiceServidor=i;
-                    }
-                }
-                return this.medicoResidente.get(indiceServidor); //Devuelvo o bien el primero de los servidores ya que ninguno tiene cola, o el que tiene cola con el item de menor tiempo.
+        switch (cuadroClinico) { //Con que tipo de gravedad tratamos
+            case 0: {
+                listaUtil = this.medicoResidente;
+                break;
             }
-
-            case 1:{
-
-
-
-                cantidadServidores= this.medicoGeneral.size();
-                while(i<this.medicoGeneral.size() && this.medicoGeneral.get(i).getCola().primerItem()!=null && !hayCola){ //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
-                    //algun servidor que tenga cola y asignarle el primer item para compararlos con las otras
-                    //colas posibles de los otros servidores.
-                    hayCola=true;
-                    tiempoPaciente=this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo();
-                    i++;
-                }
-
-                for(i=0;i<cantidadServidores;i++){
-
-                    if(this.medicoGeneral.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo()) {
-                        tiempoPaciente = this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo();
-                        indiceServidor=i;
-                    }
-                }
-                return this.medicoGeneral.get(indiceServidor); //Devuelvo o bien el primero de los servidores ya que ninguno tiene cola, o el que tiene cola con el item de menor tiempo.
+            case 1: {
+                listaUtil = this.medicoGeneral;
+                break;
             }
-
-            case 2:{
-
-                cantidadServidores= this.medicoEspecialista.size();
-                while(this.medicoEspecialista.get(i).getCola().primerItem()!=null && !hayCola){ //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
-                    //algun servidor que tenga cola y asignarle el primer item para compararlos con las otras
-                    //colas posibles de los otros servidores.
-                    hayCola=true;
-                    tiempoPaciente=this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo();
-                    i++;
-                }
-
-                for(i=0;i<cantidadServidores;i++){
-
-                    if(this.medicoEspecialista.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo()) {
-                        tiempoPaciente = this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo();
-                        indiceServidor=i;
-                    }
-                }
-                return this.medicoEspecialista.get(indiceServidor); //Devuelvo o bien el primero de los servidores ya que ninguno tiene cola, o el que tiene cola con el item de menor tiempo.
+            case 2: {
+                listaUtil = this.medicoEspecialista;
+                break;
             }
         }
-        return null;
+        cantidadServidores = listaUtil.size();
+
+        while (listaUtil.get(i).getCola().primerItem() != null && !hayCola) {
+            //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
+            //algun servidor que tenga cola y asignarle el primer item para compararlos con las otras
+            //colas posibles de los otros servidores.
+
+            hayCola = true;
+            tiempoPaciente = listaUtil.get(i).getCola().primerItem().getTiempoArribo();
+            i++;
+        }
+
+        for (i = 0; i < cantidadServidores; i++) {
+
+            if (listaUtil.get(i).getCola().primerItem() != null && tiempoPaciente > listaUtil.get(i).getCola().primerItem().getTiempoArribo()) {
+                tiempoPaciente = listaUtil.get(i).getCola().primerItem().getTiempoArribo();
+                indiceServidor = i;
+            }
+        }
+        return listaUtil.get(indiceServidor); //Devuelvo o bien el primero de los servidores ya que ninguno tiene cola, o el que tiene cola con el item de menor tiempo.
+
     }
 
     public LinkedList<Servidor> getMedicoResidente() {
