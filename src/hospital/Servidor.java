@@ -21,7 +21,7 @@ public class Servidor {
         tiempoInicioOcio = 0;
         // Inicio de Ocio en 0
 
-        cola=new Queue(); //Inicialización de la cola, vacia.
+        setCola(new Queue()); //Inicialización de la cola, vacia.
     }
 
     public Paciente getPaciente() {
@@ -59,5 +59,13 @@ public class Servidor {
 
     public void setTiempoInicioOcio(float tiempoInicioOcio) {
         this.tiempoInicioOcio = tiempoInicioOcio;
+    }
+
+    public Queue getCola() {
+        return cola;
+    }
+
+    public void setCola(Queue cola) {
+        this.cola = cola;
     }
 }
