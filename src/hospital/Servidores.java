@@ -119,7 +119,7 @@ public class Servidores {
 
                 for(i=0;i<cantidadServidores;i++){
 
-                    if(tiempoPaciente > this.medicoResidente.get(i).getCola().primerItem().getTiempoArribo()) {
+                    if(this.medicoResidente.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoResidente.get(i).getCola().primerItem().getTiempoArribo()) {
                         tiempoPaciente = this.medicoResidente.get(i).getCola().primerItem().getTiempoArribo();
                         indiceServidor=i;
                     }
@@ -135,7 +135,7 @@ public class Servidores {
 
 
                 cantidadServidores= this.medicoGeneral.size();
-                while(this.medicoGeneral.get(i).getCola().primerItem()!=null && !hayCola){ //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
+                while(i<this.medicoGeneral.size() && this.medicoGeneral.get(i).getCola().primerItem()!=null && !hayCola){ //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
                     //algun servidor que tenga cola y asignarle el primer item para compararlos con las otras
                     //colas posibles de los otros servidores.
                     hayCola=true;
@@ -145,7 +145,7 @@ public class Servidores {
 
                 for(i=0;i<cantidadServidores;i++){
 
-                    if(tiempoPaciente > this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo()) {
+                    if(this.medicoResidente.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo()) {
                         tiempoPaciente = this.medicoGeneral.get(i).getCola().primerItem().getTiempoArribo();
                         indiceServidor=i;
                     }
@@ -169,7 +169,7 @@ public class Servidores {
 
                 for(i=0;i<cantidadServidores;i++){
 
-                    if(tiempoPaciente > this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo()) {
+                    if(this.medicoResidente.get(i).getCola().primerItem() != null && tiempoPaciente > this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo()) {
                         tiempoPaciente = this.medicoEspecialista.get(i).getCola().primerItem().getTiempoArribo();
                         indiceServidor=i;
                     }
