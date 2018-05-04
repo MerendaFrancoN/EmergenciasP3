@@ -16,7 +16,7 @@ public class EventoArribo extends Evento {
         Paciente.setCantidadItems(Paciente.getCantidadItems() + 1);
     }
 
-    public void planificarEvento(Servidores servidores, Queue queue, byte cuadro) {
+    public void planificarEvento(Servidores servidores, byte cuadro) {
         /* Planificar el nuevo evento de arribo */
         int i=0;
 

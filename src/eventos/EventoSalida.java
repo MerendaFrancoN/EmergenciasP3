@@ -13,7 +13,7 @@ public class EventoSalida extends Evento {
     }
 
     @Override
-    public void planificarEvento(Servidores servidores, Queue queue, byte cuadro) {
+    public void planificarEvento(Servidores servidores, byte cuadro) {
 
         Servidor servidorUtil; //Recupero en que servidor estoy trabajando y luego genero evento de salida, coleccionando estadisticas.
 

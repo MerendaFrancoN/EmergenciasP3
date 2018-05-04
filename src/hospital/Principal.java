@@ -11,24 +11,30 @@ public class Principal {
 
     public static void main(String[] args) {
 
+        //TODO: Coleccion de estadísticas
 
         boolean finSimulacion = false;
         Evento actual;
         float tiempoSimulacion;
 
-        // Creo la Fel, Queue y Servidor
+        // Creo la Fel e inicializo los  Servidores
         Fel fel = Fel.getFel();
-        Queue queue = new Queue();
+
         Servidores servidores = new Servidores();
         servidores.inicializarServidores(2,1,2);
 
         // Inicializamos el tiempo de la simulacion.
         tiempoSimulacion = 0;
         // Creo evento de Fin de Simulacion y lo cargo a la FEL, con 'tiempo' igual al tiempo que se desea ejecutar la simulacion.
-        fel.insertarFel(new EventoFinSimulacion(10080)); // 1 Semana = 10080 Minutos
+        fel.insertarFel(new EventoFinSimulacion(100)); // 168 Horas = 604800 Minutos
 
         // Creo primer evento de Arribo
-        fel.insertarFel(new EventoArribo(tiempoSimulacion));
+        fel.insertarFel(new EventoArribo(tiempoSimulacion,(byte)0));
+
+        fel.insertarFel(new EventoArribo(tiempoSimulacion,(byte)1));
+
+        fel.insertarFel(new EventoArribo(tiempoSimulacion,(byte)2));
+
 
         // Mostrar la lista para hacer Debug
         // fel.mostrarFel();
@@ -40,7 +46,7 @@ public class Principal {
             tiempoSimulacion = actual.getTiempo();
 
             // Planificamos el evento proximo a partir de 'actual'
-            actual.planificarEvento(servidor, queue);
+            actual.planificarEvento(servidores, actual.getCuadroClinico());
 
             if (actual.getTipo() == 2) {
                 // Si el evento es de 'FinSimulacion' terminar con el loop.
@@ -51,7 +57,7 @@ public class Principal {
         }
         // Muestra de resultados
 
-        Estadisticas.calcularEstadisticas(Paciente.getTiempoEsperaCola(), Paciente.getTiempoTransito(), servidor.getTiempoOcioso(), tiempoSimulacion, Paciente.getCantidadItems());
+        //Estadisticas.calcularEstadisticas(Paciente.getTiempoEsperaCola(), Paciente.getTiempoTransito(), servidor.getTiempoOcioso(), tiempoSimulacion, Paciente.getCantidadItems());
 
         System.out.println("##############################################");
         System.out.println("#######  RESULTADOS DE LA SIMULACION  ########");

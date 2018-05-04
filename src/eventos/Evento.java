@@ -40,7 +40,7 @@ public abstract class Evento implements Comparable<Evento> {
     }
 
     // Implementa la planificacion de eventos.
-    public abstract void planificarEvento(Servidores servidor, Queue queue,byte cuadro);
+    public abstract void planificarEvento(Servidores servidor,byte cuadro);
 
     @Override
     public int compareTo(Evento o) {
