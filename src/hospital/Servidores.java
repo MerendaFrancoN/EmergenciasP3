@@ -65,10 +65,10 @@ public class Servidores {
         return colaAsignada;
     }
 
-    /*
+    /***
     Devuelve el servidor que contiene cola a retirar item más próximo a ser evaluado por servidor.
     Luego el servidor puede ser útil a la hora de calcular estadísticas.
-     */
+     ***/
     public Servidor retirarCola(byte cuadroClinico) { //Devolver o el servidor que no tiene cola o el que tenga el item de menor tiempo
 
         /*Como las colas se que estan ordenadas, solo examino el primer item de cada una de ellas y ver
