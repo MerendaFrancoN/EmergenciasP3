@@ -4,33 +4,40 @@ import fel.Fel;
 import fel.GeneradorTiempos;
 import fel.Queue;
 import hospital.Servidor;
+import hospital.Servidores;
 
 public class EventoSalida extends Evento {
 
-    public EventoSalida(float tiempo, Paciente paciente) {
-        super((byte) 1, tiempo, paciente);
+    public EventoSalida(float tiempo, Paciente paciente,byte cuadroClinico) {
+        super((byte) 1, tiempo, paciente,cuadroClinico);
     }
 
-    public void planificarEvento(Servidor servidor, Queue queue) {
-        // Planificar nuevo evento de salida
-        if (queue.HayCola()) {
-            // Saco item de la cola y genero evento de salida con itemActual
+    @Override
+    public void planificarEvento(Servidores servidores, Queue queue, byte cuadro) {
 
-            Fel.getFel().insertarFel(new EventoSalida(this.getTiempo() + GeneradorTiempos.getTiempoDuracionServicio(), queue.suprimirCola()));
+        Servidor servidorUtil; //Recupero en que servidor estoy trabajando y luego genero evento de salida, coleccionando estadisticas.
 
-        } else {
-            // Si no hay cola, marcar al Servidor como no ocupado.
-            servidor.setOcupado(false);
+        servidorUtil=servidores.retirarCola(cuadro);
 
-            // Debe empezar a contar el tiempo de ocio.
-            servidor.setTiempoInicioOcio(this.getTiempo());
+        if(servidorUtil!= null){//Hay cola
+            Fel.getFel().insertarFel(new EventoSalida(this.getTiempo() + (float)GeneradorTiempos.getTiempoDuracionServicio(cuadro),servidorUtil.getCola().suprimirCola(),cuadro));
+        }
+        else{ //No hay Cola
 
+            //Marco servidor como no ocupado
+            servidorUtil.setOcupado(false);
+
+            //Empezar a contar tiempo de ocio
+            servidorUtil.setTiempoInicioOcio(this.getTiempo());
         }
 
         // Colecto tiempo en espera
-        Paciente.setTiempoEsperaCola(this.getTiempo(), this.getPaciente().getTiempoDuracionServicio(), this.getPaciente().getTiempoArribo());
+
 
         // Colecto tiempo en tránsito
         Paciente.setTiempoTransito(this.getTiempo(), this.getPaciente().getTiempoArribo());
+
+
+
     }
 }
