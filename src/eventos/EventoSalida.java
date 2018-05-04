@@ -12,6 +12,7 @@ public class EventoSalida extends Evento {
         super((byte) 1, tiempo, paciente,cuadroClinico);
     }
 
+    //TODO: ARREGLAR CUANDO DEVUELVO SERVIDOR Y EL METODO EN SERVIDORES.
     @Override
     public void planificarEvento(Servidores servidores, byte cuadro) {
 
@@ -25,10 +26,38 @@ public class EventoSalida extends Evento {
         else{ //No hay Cola
 
             //Marco servidor como no ocupado
-            servidorUtil.setOcupado(false);
+            //servidorUtil.setOcupado(false);
+
+            switch (this.getCuadroClinico()){
+                case 0:
+                    for(int i=0;i<servidores.getMedicoResidente().size();i++){
+                        if(servidores.getMedicoResidente().get(i).getCola().getCantidadItems()==0){
+
+                            servidores.getMedicoResidente().get(i).setOcupado(false);
+                            servidores.getMedicoResidente().get(i).setTiempoInicioOcio(this.getTiempo());
+                            }
+                    }
+
+                case 1:
+                    for(int i=0;i<servidores.getMedicoGeneral().size();i++){
+                        if(servidores.getMedicoGeneral().get(i).getCola().getCantidadItems()==0){
+
+                        servidores.getMedicoGeneral().get(i).setOcupado(false);
+                        servidores.getMedicoGeneral().get(i).setTiempoInicioOcio(this.getTiempo());
+                        }
+                    }
+                case 2:
+                    for(int i=0;i<servidores.getMedicoEspecialista().size();i++){
+                        if(servidores.getMedicoEspecialista().get(i).getCola().getCantidadItems()==0){
+
+                            servidores.getMedicoEspecialista().get(i).setOcupado(false);
+                            servidores.getMedicoEspecialista().get(i).setTiempoInicioOcio(this.getTiempo());
+                         }
+                    }
+                    
+            }
 
             //Empezar a contar tiempo de ocio
-            servidorUtil.setTiempoInicioOcio(this.getTiempo());
         }
 
         // Colecto tiempo en espera
