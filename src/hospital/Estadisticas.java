@@ -1,30 +1,24 @@
 package hospital;
 
 public class Estadisticas {
-    static float tiempoEsperaMedio = 0;
-    static float porcentajeTiempoOcioso = 0;
-    static float tiempoMedioTransito = 0;
+    // todo: implementar el calculo de estadisticas finales.
+    /*
+    Con este propósito, se ha tomado la dedición de realizar un estudio de simulación para
+    evaluar el desempeño del servicio de guardia médica del hospital, ya que es un servicio
+    crítico y ningún detalle puede ser dejado al azar.
 
-    // Ver donde y como implementar el calculo final.
-    public static void calcularEstadisticas(float tiempoEsperaCola, float tiempoTransito, float tiempoOcioso,
-                                            float tiempoFinSimulacion, int cantidadItems) {
+    Además de lo mencionado anteriormente, los directivos desean conocer el tiempo
+    medio de tránsito de los pacientes en el interior del hospital, el tiempo medio
+    de espera en cola de cada tipo de atención que requieren los pacientes, el tiempo medio
+    de ociosidad de cada especialista médico.
+     */
 
-        /* Carteles que luego se eliminan, es para controlar si está funcionando bien.
-        System.out.println("Tiempo Espera cola = " + tiempoEsperaCola);
-        System.out.println("Tiempo Transito = " + tiempoTransito);
-        System.out.println("Tiempo Ocioso = " + tiempoOcioso);
-        System.out.println("Tiempo fin Simulacion = " + tiempoFinSimulacion);
-        System.out.println("Cantidad de items = " + cantidadItems);
-        */
+    // Guardamos las estadisticas de tiempo en cola en la clase de Estadisticas, no en Paciente.
+    private static double tiempoEsperaColaTipo0, tiempoEsperaColaTipo1, tiempoEsperaColaTipo2;
+    private static double tiempoTransitoTipo0,tiempoTransitoTipo1, tiempoTransitoTipo2;
 
-        // Tiempo espera medio por paciente
-        // Control para evitar tiempos invalidos
-        if (tiempoEsperaCola != 0)
-            tiempoEsperaMedio = tiempoEsperaCola / ((float) cantidadItems);
-        // Porcentaje de tiempo Ocioso del médico
-        porcentajeTiempoOcioso = (tiempoOcioso / tiempoFinSimulacion);
-        // Tiempo medio de tránsito por paciente
-        tiempoMedioTransito = tiempoTransito / ((float) cantidadItems);
+    public void calcularEstadisticas(Servidores servidores, float tiempoFinSimulacion, int cantPacientes){
 
     }
+
 }

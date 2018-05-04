@@ -2,43 +2,39 @@ package eventos;
 
 import fel.Fel;
 import fel.GeneradorTiempos;
-import fel.Queue;
 import hospital.Servidor;
 import hospital.Servidores;
 
 public class EventoSalida extends Evento {
 
-    public EventoSalida(float tiempo, Paciente paciente,byte cuadroClinico) {
-        super((byte) 1, tiempo, paciente,cuadroClinico);
+    public EventoSalida(float tiempo, Paciente paciente) {
+        super((byte) 1, tiempo, paciente);
     }
 
-    //TODO: ARREGLAR CUANDO DEVUELVO SERVIDOR Y EL METODO EN SERVIDORES.
     @Override
-    public void planificarEvento(Servidores servidores, byte cuadro) {
+    public void planificarEvento(Servidores servidores) {
 
-        Servidor servidorUtil; //Recupero en que servidor estoy trabajando y luego genero evento de salida, coleccionando estadisticas.
+        // Recuperamos el servidor que contenia el paciente que se esta yendo.
+        Servidor servidorActual = servidores.getServidorConPaciente(this.getPaciente());
 
-        servidorUtil=servidores.retirarCola(cuadro);
+        if (servidorActual.getCola().hayCola()) {
+            // Si el servidor acutal tiene cola tomamos el primer paciente de la cola, y con ese paciente creamos un evento de salida.
+            Fel.getFel().insertarFel( new EventoSalida(this.getTiempo() + (float) GeneradorTiempos.getTiempoEntreArribos(this.getTiempo(), this.getPaciente().getCuadroClinico()), servidorActual.getCola().suprimirCola()));
+        } else { // Si no hay cola...
 
-        if( servidorUtil.getCola().getCantidadItems()!=0 ){//Hay cola
-            Fel.getFel().insertarFel(new EventoSalida(this.getTiempo() + (float)GeneradorTiempos.getTiempoDuracionServicio(cuadro),servidorUtil.getCola().suprimirCola(),cuadro));
-        }
-        else{ //No hay Cola
+            // Marcamos servidor como no ocupado
+            servidorActual.setOcupado(false);
 
-            //Marco servidor como no ocupado
-            servidorUtil.setOcupado(false);
 
-            //Empezar a contar tiempo de ocio
-            servidorUtil.setTiempoInicioOcio(this.getTiempo());
+            // Empezamos a contar tiempo de ocio
+            servidorActual.setTiempoInicioOcio(this.getTiempo());
         }
 
         // Colecto tiempo en espera
-
+        Paciente.setTiempoEsperaCola(this.getTiempo(), this.getPaciente().getTiempoDuracionServicio(), this.getPaciente().getTiempoArribo());
 
         // Colecto tiempo en tránsito
         Paciente.setTiempoTransito(this.getTiempo(), this.getPaciente().getTiempoArribo());
-
-
 
     }
 }

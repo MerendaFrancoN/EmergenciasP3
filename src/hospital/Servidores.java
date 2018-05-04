@@ -1,146 +1,151 @@
 package hospital;
 
-import java.util.LinkedList;
-
 import eventos.Paciente;
 import fel.Queue;
 
+import java.util.LinkedList;
+
 public class Servidores {
 
-/*TODO: Metodo de deteccion de colas y asignacion del paciente a las mismas. Calculo Estadisticas*/
     private LinkedList<Servidor> medicoResidente;
     private LinkedList<Servidor> medicoGeneral;
     private LinkedList<Servidor> medicoEspecialista;
 
-    public Servidores(){
-        this.setMedicoEspecialista(new LinkedList<>());
-        this.setMedicoGeneral(new LinkedList<>());
-        this.setMedicoResidente(new LinkedList<>());
-    }
-    public void inicializarServidores(int cantResidente, int cantGeneral, int cantEsp ){
-        for(int i=0;i<cantResidente;i++){
-            this.getMedicoResidente().add(new Servidor());
-        }
-        for(int i=0;i<cantGeneral;i++){
-            this.getMedicoGeneral().add(new Servidor());
-        }
-        for(int i=0;i<cantEsp;i++){
-            this.getMedicoEspecialista().add(new Servidor());
-        }
+    public Servidores() {
+        this.medicoEspecialista = new LinkedList<>();
+        this.medicoGeneral = new LinkedList<>();
+        this.medicoResidente = new LinkedList<>();
     }
 
+    public void inicializarServidores(int cantResidente, int cantGeneral, int cantEsp) {
+        for (int i = 0; i < cantResidente; i++) {
+            this.medicoResidente.add(new Servidor());
+        }
+        for (int i = 0; i < cantGeneral; i++) {
+            this.medicoGeneral.add(new Servidor());
+        }
+        for (int i = 0; i < cantEsp; i++) {
+            this.medicoEspecialista.add(new Servidor());
+        }
+    }
 
-    public Queue asignacionCola(byte cuadroClinico) { //cola mas corta o primera de todas si son de igual longitud
+    /**
+     * @param cuadroClinico tipo de Cuadro Clinico del que se quiere conocer la cola mas corta.
+     * @return Queue del servidor del Cuadro Clinico indicado mas corta, o la primera en caso de que sean todos iguales.
+     */
+    public Queue asignacionCola(byte cuadroClinico) {
 
-        Queue colaAsignada; //Variable con la cola a donde asignar el paciente.
-        int cantidadServidores; //Variable que contiene la cantidad de servidores por tipo de médico.
-        int colaCorta; //Variable que lleva la cantidad de la cola más corta.
-        LinkedList<Servidor> listaUtil = null;
+        Queue colaAsignada = null;
+        // La cola que retorna.
+        int colaMasCorta = 1000000000;
+        // Valor para comparar el tamaño de cola
+        LinkedList<Servidor> listaServidores = null;
+        // Lista con todos los servidores del tipo indicado.
 
         switch (cuadroClinico) {
             case 0: {
-                listaUtil = this.medicoResidente;
+                listaServidores = this.medicoResidente;
                 break;
             }
             case 1: {
-                listaUtil = this.medicoGeneral;
+                listaServidores = this.medicoGeneral;
                 break;
             }
             case 2: {
-                listaUtil = this.medicoEspecialista;
+                listaServidores = this.medicoEspecialista;
                 break;
             }
         }
-        cantidadServidores = listaUtil.size();
-        colaCorta = listaUtil.get(0).getCola().getCantidadItems();
-        colaAsignada = listaUtil.get(0).getCola();
 
-        //Ya revise en i=0, por lo tanto arranco desde i=1
-        for (int i = 1; i < cantidadServidores; i++)
-            if (colaCorta > listaUtil.get(i).getCola().getCantidadItems()) {
-
-                colaCorta = listaUtil.get(i).getCola().getCantidadItems();
-                colaAsignada = listaUtil.get(i).getCola();
+        for (Servidor x : listaServidores) {
+            if (x.getCola().getCantidadItems() < colaMasCorta) {
+                colaAsignada = x.getCola();
+                colaMasCorta = x.getCola().getCantidadItems();
             }
+        }
         return colaAsignada;
+        // Podria hacerse un control por retorno como null.
     }
 
-    /***
-    Devuelve el servidor que contiene cola a retirar item más próximo a ser evaluado por servidor.
-    Luego el servidor puede ser útil a la hora de calcular estadísticas.
-     ***/
-    public Servidor retirarCola(byte cuadroClinico) { //Devolver o el servidor que no tiene cola o el que tenga el item de menor tiempo
+    /**
+     * @param cuadroClinico Cuadro Clinico del que queremos ver si estan o no los servidores ocupados
+     * @return Verdadero en caso de que todos los servidores esten ocupados, falso en caso de que encuentre por lo menos uno servidor del tipo indicado como libre.
+     */
+    public Boolean estanOcupados(byte cuadroClinico) {
+        LinkedList<Servidor> listaServidores = null;
 
-        /*Como las colas se que estan ordenadas, solo examino el primer item de cada una de ellas y ver
-          quien tiene el paciente con menor tiempo*/
-
-        float tiempoPaciente = 0;
-        int indiceServidor = 0;
-        int cantidadServidores;
-        int i = 0; //Variable para moverse entre los indices de las colas
-        boolean hayCola = false;
-        LinkedList<Servidor> listaUtil = null;
-
-        switch (cuadroClinico) { //Con que tipo de gravedad tratamos
+        switch (cuadroClinico) {
             case 0: {
-                listaUtil = this.medicoResidente;
+                listaServidores = this.medicoResidente;
                 break;
             }
             case 1: {
-                listaUtil = this.medicoGeneral;
+                listaServidores = this.medicoGeneral;
                 break;
             }
             case 2: {
-                listaUtil = this.medicoEspecialista;
+                listaServidores = this.medicoEspecialista;
                 break;
             }
         }
-        cantidadServidores = listaUtil.size();
 
-        while (listaUtil.get(i).getCola().primerItem() != null && !hayCola) {
-            //Es para el caso en que el primer servidor no tenga cola y el segundo si, busca
-            //algun servidor que tenga cola y asignarle el primer item para compararlos con las otras
-            //colas posibles de los otros servidores.
-
-            hayCola = true;
-            tiempoPaciente = listaUtil.get(i).getCola().primerItem().getTiempoArribo();
-            i++;
-        }
-
-        for (i = 0; i < cantidadServidores; i++) {
-
-            if (listaUtil.get(i).getCola().primerItem() != null && tiempoPaciente > listaUtil.get(i).getCola().primerItem().getTiempoArribo()) {
-                tiempoPaciente = listaUtil.get(i).getCola().primerItem().getTiempoArribo();
-                indiceServidor = i;
+        for (Servidor x : listaServidores) {
+            if (!x.isOcupado()) {
+                return false;
             }
         }
-        return listaUtil.get(indiceServidor); //Devuelvo o bien el primero de los servidores ya que ninguno tiene cola, o el que tiene cola con el item de menor tiempo.
-
+        return true;
     }
 
-    public LinkedList<Servidor> getMedicoResidente() {
-        return medicoResidente;
+    public Servidor getServidorDesocupado(byte cuadroClinico) {
+        LinkedList<Servidor> listaServidores = null;
+
+        switch (cuadroClinico) {
+            case 0: {
+                listaServidores = this.medicoResidente;
+                break;
+            }
+            case 1: {
+                listaServidores = this.medicoGeneral;
+                break;
+            }
+            case 2: {
+                listaServidores = this.medicoEspecialista;
+                break;
+            }
+        }
+
+        for (Servidor x : listaServidores) {
+            if (!x.isOcupado()) {
+                return x;
+            }
+        }
+        return null;
     }
 
-    public void setMedicoResidente(LinkedList<Servidor> medicoResidente) {
-        this.medicoResidente = medicoResidente;
+    public Servidor getServidorConPaciente(Paciente x) {
+        LinkedList<Servidor> listaServidores = null;
+
+        switch (x.getCuadroClinico()) {
+            case 0: {
+                listaServidores = this.medicoResidente;
+                break;
+            }
+            case 1: {
+                listaServidores = this.medicoGeneral;
+                break;
+            }
+            case 2: {
+                listaServidores = this.medicoEspecialista;
+                break;
+            }
+        }
+
+        for (Servidor y : listaServidores) {
+            if (y.getPaciente() == x) {
+                return y;
+            }
+        }
+        return null;
     }
-
-    public LinkedList<Servidor> getMedicoGeneral() {
-        return medicoGeneral;
-    }
-
-    public void setMedicoGeneral(LinkedList<Servidor> medicoGeneral) {
-        this.medicoGeneral = medicoGeneral;
-    }
-
-    public LinkedList<Servidor> getMedicoEspecialista() {
-        return medicoEspecialista;
-    }
-
-    public void setMedicoEspecialista(LinkedList<Servidor> medicoEspecialista) {
-        this.medicoEspecialista = medicoEspecialista;
-    }
-
-
 }

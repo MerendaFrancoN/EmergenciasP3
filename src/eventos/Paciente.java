@@ -1,6 +1,7 @@
 package eventos;
 
 public class Paciente {
+    // todo: hay que hacer un contador para cada tipo de cuadro clinico
     private static float tiempoEsperaCola = 0;
     private static float tiempoTransito = 0;
     private static int cantidadItems = 0;
@@ -8,7 +9,6 @@ public class Paciente {
     private int numero;
     private float tiempoArribo;
     private float tiempoDuracionServicio;
-
     private byte cuadroClinico;
     /*
     Codificación:
@@ -17,12 +17,11 @@ public class Paciente {
         2:Grave
      */
 
-    public Paciente(int numero, float tiempoArribo, byte cuadroClinico ){
+    public Paciente(int numero, float tiempoArribo, byte cuadroClinico) {
         this.numero = numero;
         this.tiempoArribo = tiempoArribo;
         this.tiempoDuracionServicio = 0;
-        this.cuadroClinico=cuadroClinico;
-
+        this.cuadroClinico = cuadroClinico;
     }
 
     public static int getCantidadItems() {
@@ -71,11 +70,9 @@ public class Paciente {
     public void setTiempoDuracionServicio(float tiempoDuracionServicio) {
         this.tiempoDuracionServicio = tiempoDuracionServicio;
     }
+
     public byte getCuadroClinico() {
         return cuadroClinico;
-    }
+   }
 
-    public void setCuadroClinico(byte cuadroClinico) {
-        this.cuadroClinico = cuadroClinico;
-    }
 }

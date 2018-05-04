@@ -28,10 +28,6 @@ public class Servidor {
         return paciente;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
     public boolean isOcupado() {
         return ocupado;
     }

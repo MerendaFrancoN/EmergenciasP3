@@ -13,12 +13,6 @@ public class Queue {
         cola = new LinkedList<>();
         setCantidadItems(0);
     }
-    public Paciente primerItem(){
-        if(this.cola.size()==0)
-            return null;
-        else
-            return this.cola.get(0);
-    }
 
     public void insertarCola(Paciente paciente) {
         this.cola.addLast(paciente);
@@ -30,7 +24,7 @@ public class Queue {
         return this.cola.removeFirst();
     }
 
-    public boolean HayCola() {
+    public boolean hayCola() {
         return this.getCantidadItems() > 0;
     }
 
