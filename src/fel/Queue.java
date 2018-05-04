@@ -11,21 +11,28 @@ public class Queue {
 
     public Queue() {
         cola = new LinkedList<>();
-        cantidadItems = 0;
+        setCantidadItems(0);
     }
 
     public void insertarCola(Paciente paciente) {
         this.cola.addLast(paciente);
-        this.cantidadItems++;
+        this.setCantidadItems(this.getCantidadItems() + 1);
     }
 
     public Paciente suprimirCola() {
-        this.cantidadItems--;
+        this.setCantidadItems(this.getCantidadItems() - 1);
         return this.cola.removeFirst();
     }
 
     public boolean HayCola() {
-        return this.cantidadItems > 0;
+        return this.getCantidadItems() > 0;
     }
 
+    public int getCantidadItems() {
+        return cantidadItems;
+    }
+
+    public void setCantidadItems(int cantidadItems) {
+        this.cantidadItems = cantidadItems;
+    }
 }
