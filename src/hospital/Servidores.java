@@ -10,20 +10,45 @@ public class Servidores {
     private LinkedList<Servidor> medicoEspecialista;
 
     public Servidores(){
-        this.medicoEspecialista=new LinkedList<>();
-        this.medicoGeneral=new LinkedList<>();
-        this.medicoResidente=new LinkedList<>();
+        this.setMedicoEspecialista(new LinkedList<>());
+        this.setMedicoGeneral(new LinkedList<>());
+        this.setMedicoResidente(new LinkedList<>());
     }
     public void inicializarServidores(int cantResidente, int cantGeneral, int cantEsp ){
-        for(int i;i<cantResidente;i++){
-            this.medicoResidente.add(new Servidor());
+        for(int i=0;i<cantResidente;i++){
+            this.getMedicoResidente().add(new Servidor());
         }
-        for(int i;i<cantGeneral;i++){
-            this.medicoGeneral.add(new Servidor());
+        for(int i=0;i<cantGeneral;i++){
+            this.getMedicoGeneral().add(new Servidor());
         }
-        for(int i;i<cantEsp;i++){
-            this.medicoEspecialista.add(new Servidor());
+        for(int i=0;i<cantEsp;i++){
+            this.getMedicoEspecialista().add(new Servidor());
         }
     }
+
+    public LinkedList<Servidor> getMedicoResidente() {
+        return medicoResidente;
+    }
+
+    public void setMedicoResidente(LinkedList<Servidor> medicoResidente) {
+        this.medicoResidente = medicoResidente;
+    }
+
+    public LinkedList<Servidor> getMedicoGeneral() {
+        return medicoGeneral;
+    }
+
+    public void setMedicoGeneral(LinkedList<Servidor> medicoGeneral) {
+        this.medicoGeneral = medicoGeneral;
+    }
+
+    public LinkedList<Servidor> getMedicoEspecialista() {
+        return medicoEspecialista;
+    }
+
+    public void setMedicoEspecialista(LinkedList<Servidor> medicoEspecialista) {
+        this.medicoEspecialista = medicoEspecialista;
+    }
+
 
 }
