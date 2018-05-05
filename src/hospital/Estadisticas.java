@@ -72,6 +72,7 @@ public class Estadisticas {
         System.out.println("#######  RESULTADOS DE LA SIMULACION  ########");
         System.out.println("##############################################");
         System.out.println();
+        System.out.println("Tiempos mostrados en minutos.");
         System.out.println("Tiempo total de simulacion: " + tiempoFinSimulacion);
         System.out.println("Cantidad total de pacientes " + getCantPacientes());
         System.out.println();
@@ -87,11 +88,11 @@ public class Estadisticas {
                     System.out.println("Datos de tipo Grave:");
                     break;
             }
-            System.out.println("Tiempo medio de espera en Cola: " + tiempoEsperaColaMedia[i]);
-            System.out.println("Tiempo medio de transito: " + tiempoTransitoMedio[i]);
+            System.out.printf("Tiempo medio de espera en Cola: %.2f\n", tiempoEsperaColaMedia[i]);
+            System.out.printf("Tiempo medio de transito: %.2f\n", tiempoTransitoMedio[i]);
             System.out.println("Porcentaje de tiempo ocioso de los medicos:");
             for (Servidor x : servidores.listaServidoresPorTipo((byte) i)) {
-                System.out.printf("   Valor: %.2f\n", x.getPorcentajeTiempoOcioso() * 100);
+                System.out.printf("   Valor: %% %.2f\n", x.getPorcentajeTiempoOcioso() * 100);
             }
             System.out.println("----------------------------------------");
         }
