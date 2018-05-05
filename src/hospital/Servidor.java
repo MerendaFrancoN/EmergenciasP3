@@ -8,8 +8,9 @@ public class Servidor {
     private boolean ocupado;
     private float tiempoOcioso;
     private float tiempoInicioOcio;
+    private Queue cola;
 
-    private Queue cola; //Cola propia de cada servidor
+    private float porcentajeTiempoOcioso;
 
     public Servidor() {
         paciente = null;
@@ -28,16 +29,16 @@ public class Servidor {
         return paciente;
     }
 
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
     public boolean isOcupado() {
         return ocupado;
     }
 
     public void setOcupado(boolean ocupado) {
         this.ocupado = ocupado;
-    }
-
-    public float getTiempoOcioso() {
-        return tiempoOcioso;
     }
 
     /**
@@ -64,4 +65,15 @@ public class Servidor {
     public void setCola(Queue cola) {
         this.cola = cola;
     }
+
+    // Estoy haciendo el calculo de estadisticas dentro de la clase.
+    // No se deberia hacer, pero resulto ser la manera mas sencilla sin modificar demasiado el resto del codigo.
+    public void calcularPorcentajeTiempoOcioso(float tiempoTotal){
+        this.porcentajeTiempoOcioso = (this.tiempoOcioso / tiempoTotal);
+    }
+
+    public float getPorcentajeTiempoOcioso() {
+        return porcentajeTiempoOcioso;
+    }
+
 }

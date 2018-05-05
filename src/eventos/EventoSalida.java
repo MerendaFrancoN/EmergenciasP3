@@ -2,6 +2,7 @@ package eventos;
 
 import fel.Fel;
 import fel.GeneradorTiempos;
+import hospital.Estadisticas;
 import hospital.Servidor;
 import hospital.Servidores;
 
@@ -25,16 +26,15 @@ public class EventoSalida extends Evento {
             // Marcamos servidor como no ocupado
             servidorActual.setOcupado(false);
 
-
             // Empezamos a contar tiempo de ocio
             servidorActual.setTiempoInicioOcio(this.getTiempo());
         }
 
         // Colecto tiempo en espera
-        Paciente.setTiempoEsperaCola(this.getTiempo(), this.getPaciente().getTiempoDuracionServicio(), this.getPaciente().getTiempoArribo());
+        Estadisticas.actualizarTiempoEsperaCola(this.getPaciente().getCuadroClinico(), this.getTiempo(), this.getPaciente().getTiempoDuracionServicio(), this.getPaciente().getTiempoArribo());
 
         // Colecto tiempo en tránsito
-        Paciente.setTiempoTransito(this.getTiempo(), this.getPaciente().getTiempoArribo());
+        Estadisticas.actualizarTiempoTransito(this.getPaciente().getCuadroClinico(), this.getTiempo(), this.getPaciente().getTiempoArribo());
 
     }
 }

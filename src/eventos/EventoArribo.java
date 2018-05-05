@@ -2,6 +2,7 @@ package eventos;
 
 import fel.Fel;
 import fel.GeneradorTiempos;
+import hospital.Estadisticas;
 import hospital.Servidor;
 import hospital.Servidores;
 
@@ -9,12 +10,10 @@ public class EventoArribo extends Evento {
 
     public EventoArribo(float tiempo, byte cuadroClinico) {
         // Considero que inicia en item n°1
-        super((byte) 0, tiempo, new Paciente(Paciente.getCantidadItems() + 1, tiempo, cuadroClinico));
+        super((byte) 0, tiempo, new Paciente(tiempo, cuadroClinico));
 
-
-        // TODO: Cambiar, porque necesito contadores distintos segun el cuadro clinico.
         // Actualizo la cantidad de Items.
-        Paciente.setCantidadItems(Paciente.getCantidadItems() + 1);
+        Estadisticas.actualizarCantidadPacientes(this.getPaciente().getCuadroClinico());
     }
 
 
@@ -29,16 +28,18 @@ public class EventoArribo extends Evento {
             Servidor primerDescoupado = servidores.getServidorDesocupado(this.getPaciente().getCuadroClinico());
             // Recuperamos el servidor desocupado, el cual sabemos que existe.
 
+            primerDescoupado.setPaciente(this.getPaciente());
+            // Le ponemos el paciente en cuestion
+
+            primerDescoupado.setOcupado(true);
+            // Lo marcamos como ocupado.
+
             this.getPaciente().setTiempoDuracionServicio((float) GeneradorTiempos.getTiempoDuracionServicio(this.getPaciente().getCuadroClinico()));
             // Se setea a si mismo el tiempo de duracion del servicio.
 
             EventoSalida eventoSalida = new EventoSalida(this.getTiempo() + this.getPaciente().getTiempoDuracionServicio(), this.getPaciente());
             Fel.getFel().insertarFel(eventoSalida);
             // Agregamos a la fel el evento de salida.
-
-            primerDescoupado.setOcupado(true);
-            // Lo marcamos como ocupado.
-
 
             primerDescoupado.setTiempoOcioso(this.getTiempo());
             // Recolectamos el tiempo ocioso de este servidor.

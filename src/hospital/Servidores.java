@@ -4,6 +4,7 @@ import eventos.Paciente;
 import fel.Queue;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Servidores {
 
@@ -39,23 +40,8 @@ public class Servidores {
         // La cola que retorna.
         int colaMasCorta = 1000000000;
         // Valor para comparar el tamaño de cola
-        LinkedList<Servidor> listaServidores = null;
+        LinkedList<Servidor> listaServidores = listaServidoresPorTipo(cuadroClinico);
         // Lista con todos los servidores del tipo indicado.
-
-        switch (cuadroClinico) {
-            case 0: {
-                listaServidores = this.medicoResidente;
-                break;
-            }
-            case 1: {
-                listaServidores = this.medicoGeneral;
-                break;
-            }
-            case 2: {
-                listaServidores = this.medicoEspecialista;
-                break;
-            }
-        }
 
         for (Servidor x : listaServidores) {
             if (x.getCola().getCantidadItems() < colaMasCorta) {
@@ -72,22 +58,7 @@ public class Servidores {
      * @return Verdadero en caso de que todos los servidores esten ocupados, falso en caso de que encuentre por lo menos uno servidor del tipo indicado como libre.
      */
     public Boolean estanOcupados(byte cuadroClinico) {
-        LinkedList<Servidor> listaServidores = null;
-
-        switch (cuadroClinico) {
-            case 0: {
-                listaServidores = this.medicoResidente;
-                break;
-            }
-            case 1: {
-                listaServidores = this.medicoGeneral;
-                break;
-            }
-            case 2: {
-                listaServidores = this.medicoEspecialista;
-                break;
-            }
-        }
+        LinkedList<Servidor> listaServidores = listaServidoresPorTipo(cuadroClinico);
 
         for (Servidor x : listaServidores) {
             if (!x.isOcupado()) {
@@ -98,22 +69,7 @@ public class Servidores {
     }
 
     public Servidor getServidorDesocupado(byte cuadroClinico) {
-        LinkedList<Servidor> listaServidores = null;
-
-        switch (cuadroClinico) {
-            case 0: {
-                listaServidores = this.medicoResidente;
-                break;
-            }
-            case 1: {
-                listaServidores = this.medicoGeneral;
-                break;
-            }
-            case 2: {
-                listaServidores = this.medicoEspecialista;
-                break;
-            }
-        }
+        LinkedList<Servidor> listaServidores = listaServidoresPorTipo(cuadroClinico);
 
         for (Servidor x : listaServidores) {
             if (!x.isOcupado()) {
@@ -124,22 +80,7 @@ public class Servidores {
     }
 
     public Servidor getServidorConPaciente(Paciente x) {
-        LinkedList<Servidor> listaServidores = null;
-
-        switch (x.getCuadroClinico()) {
-            case 0: {
-                listaServidores = this.medicoResidente;
-                break;
-            }
-            case 1: {
-                listaServidores = this.medicoGeneral;
-                break;
-            }
-            case 2: {
-                listaServidores = this.medicoEspecialista;
-                break;
-            }
-        }
+        LinkedList<Servidor> listaServidores = listaServidoresPorTipo(x.getCuadroClinico());
 
         for (Servidor y : listaServidores) {
             if (y.getPaciente() == x) {
@@ -147,5 +88,24 @@ public class Servidores {
             }
         }
         return null;
+    }
+
+    public LinkedList<Servidor> listaServidoresPorTipo(byte tipo){
+        LinkedList<Servidor> x = null;
+        switch (tipo) {
+            case 0: {
+                x = this.medicoResidente;
+                break;
+            }
+            case 1: {
+                x = this.medicoGeneral;
+                break;
+            }
+            case 2: {
+                x = this.medicoEspecialista;
+                break;
+            }
+        }
+        return  x;
     }
 }

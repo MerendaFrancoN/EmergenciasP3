@@ -9,8 +9,6 @@ public class Principal {
 
     public static void main(String[] args) {
 
-        //TODO: Coleccion de estadísticas
-
         boolean finSimulacion = false;
         Evento actual;
         float tiempoSimulacion;
@@ -24,7 +22,7 @@ public class Principal {
         // Inicializamos el tiempo de la simulacion.
         tiempoSimulacion = 0;
         // Creo evento de Fin de Simulacion y lo cargo a la FEL, con 'tiempo' igual al tiempo que se desea ejecutar la simulacion.
-        fel.insertarFel(new EventoFinSimulacion(604800)); // 168 Horas = 604800 Minutos
+        fel.insertarFel(new EventoFinSimulacion(6048)); // 168 Horas = 604800 Minutos
 
         // Creo primer evento de Arribo de cada tipo
         fel.insertarFel(new EventoArribo(tiempoSimulacion, (byte) 0));
@@ -34,7 +32,7 @@ public class Principal {
         fel.insertarFel(new EventoArribo(tiempoSimulacion, (byte) 2));
 
         // Mostrar la lista para hacer Debug
-        fel.mostrarFel();
+        // fel.mostrarFel();
 
         while (!finSimulacion) {
             // Actual toma el primer elemento del la Fel, el cual es el mas cercano en el tiempo.
@@ -50,8 +48,11 @@ public class Principal {
                 finSimulacion = true;
             }
             // Mostrar la lista para hacer Debug
-            fel.mostrarFel();
+            // fel.mostrarFel();
         }
         // Muestra de resultados
+
+        Estadisticas.calcularEstadisticas(servidores, tiempoSimulacion);
+        Estadisticas.mostrarResutlados(servidores, tiempoSimulacion);
     }
 }
