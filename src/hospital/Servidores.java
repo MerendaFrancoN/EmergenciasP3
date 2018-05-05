@@ -83,7 +83,7 @@ public class Servidores {
         LinkedList<Servidor> listaServidores = listaServidoresPorTipo(x.getCuadroClinico());
 
         for (Servidor y : listaServidores) {
-            if (y.getPaciente() == x) {
+            if (y.getPaciente().equals(x)) {
                 return y;
             }
         }

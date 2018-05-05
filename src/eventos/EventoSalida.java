@@ -19,8 +19,13 @@ public class EventoSalida extends Evento {
         Servidor servidorActual = servidores.getServidorConPaciente(this.getPaciente());
 
         if (servidorActual.getCola().hayCola()) {
-            // Si el servidor acutal tiene cola tomamos el primer paciente de la cola, y con ese paciente creamos un evento de salida.
-            Fel.getFel().insertarFel( new EventoSalida(this.getTiempo() + (float) GeneradorTiempos.getTiempoEntreArribos(this.getTiempo(), this.getPaciente().getCuadroClinico()), servidorActual.getCola().suprimirCola()));
+            // Si el servidor en cuestion tiene cola tomamos el primer paciente de la cola
+            Paciente sigPaciente = servidorActual.getCola().suprimirCola();
+            // Lo ponemos en el servidor
+            servidorActual.setPaciente(sigPaciente);
+            // Y creamos un evento de salida para ese paciente.
+            Fel.getFel().insertarFel(new EventoSalida(this.getTiempo() + (float) GeneradorTiempos.getTiempoEntreArribos(this.getTiempo(), this.getPaciente().getCuadroClinico()), sigPaciente));
+
         } else { // Si no hay cola...
 
             // Marcamos servidor como no ocupado

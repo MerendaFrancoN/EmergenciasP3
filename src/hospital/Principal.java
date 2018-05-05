@@ -22,7 +22,7 @@ public class Principal {
         // Inicializamos el tiempo de la simulacion.
         tiempoSimulacion = 0;
         // Creo evento de Fin de Simulacion y lo cargo a la FEL, con 'tiempo' igual al tiempo que se desea ejecutar la simulacion.
-        fel.insertarFel(new EventoFinSimulacion(6048)); // 168 Horas = 604800 Minutos
+        fel.insertarFel(new EventoFinSimulacion(604800)); // 168 Horas = 604800 Minutos
 
         // Creo primer evento de Arribo de cada tipo
         fel.insertarFel(new EventoArribo(tiempoSimulacion, (byte) 0));
